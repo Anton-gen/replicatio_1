@@ -15,7 +15,9 @@
 Для мастера:
 
 CREATE USER 'replication'@'%' IDENTIFIED WITH mysql_native_password BY '123'; - создаем пользователя
+
 GRANT REPLICATION SLAVE ON *.* TO 'replication'@'%'; - даем ему права
+
 SHOW MASTER STATUS; - смотрим статус
 
 ![1](1.jpg)
@@ -23,9 +25,13 @@ SHOW MASTER STATUS; - смотрим статус
 ![3](3.jpg)
 
 Для слейва:
+
 Создаем такого же пользователя как на мастере
+
 CHANGE MASTER TO MASTER_HOST='192.168.*.*', MASTER_USER='replication', MASTER_PASSWORD='123', MASTER_LOG_FILE = 'mysql-bin.000001', MASTER_LOG_POS = (число из колонки position из статуса мастера); - создаем репликацию
+
 START SLAVE; - стартуем
+
 SHOW SLAVE STATUS\G - проверяем статус (если вконце поставить ; выдает ошибку - особенности версии mysql)
 
 Далее на мастере создаем базу данных Gen и смотрим ее на слейве.
